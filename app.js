@@ -2,7 +2,7 @@
 
 const numbers = /[0-9.]/;
 
-// const operations = /[+-/*]/;
+const operations = /[+-/*]/;
 
 // constants
 
@@ -23,8 +23,8 @@ buttons.forEach((button) => {
     if (numbers.test(elementId)) {
       addNumber(elementId);
     }
-    if (elementId === "+") {
-      sum(elementId);
+    if (operations.test(elementId)) {
+      operate(elementId);
     }
     if (elementId === "equal") {
       equal();
@@ -45,10 +45,13 @@ const addNumber = (num) => {
 
 // function for adding
 
-const sum = (sign) => {
+const operate = (sign) => {
   storeNumber = [entryNumber.join("")];
   storeNumber.push(sign);
   entryNumber = [];
+  showOperation.innerText = storeNumber.join(" ");
+  showTotal.innerText = entryNumber;
+
   console.log(storeNumber);
 };
 
@@ -68,8 +71,8 @@ const equal = () => {
 
 // displayed variable will be the temporal variable
 
-let showTotal = document.getElementById("screenBottom");
 let showOperation = document.getElementById("screenTop");
+let showTotal = document.getElementById("screenBottom");
 
 // new entry variable
 
