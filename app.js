@@ -52,6 +52,29 @@ buttons.forEach((button) => {
   });
 });
 
+let keys = window.addEventListener("keydown", (event) => {
+  key = event.key;
+  if (numbers.test(key)) {
+    return addNumber(key);
+  }
+  if (operations.test(key)) {
+    return operate(key);
+  }
+  if (key === "Enter") {
+    return equal();
+  }
+  if (key === "Backspace") {
+    return eraser();
+  }
+  if (key === "\\") {
+    return invert();
+  }
+  if (key === "Escape" || key === "Delete") {
+    return reset();
+  }
+  console.log(key);
+});
+
 // numbers will be added to a entry variable
 
 const addNumber = (num) => {
@@ -174,7 +197,3 @@ validateNumber = (array) => {
 
 let showOperation = document.getElementById("screenTop");
 let showTotal = document.getElementById("screenBottom");
-
-// new entry variable
-
-// show result
