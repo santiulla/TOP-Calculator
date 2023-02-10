@@ -16,9 +16,11 @@ let total;
 
 const resetEntryNumber = () => (entryNumber = []);
 const resetStoreNumber = () => (storeNumber = []);
-
 const showTotalFunction = (show) => {
   showTotal.innerText = show;
+};
+const showOperationFunction = (show) => {
+  showOperation.innerText = show;
 };
 
 // create buttos event listeners
@@ -38,6 +40,15 @@ buttons.forEach((button) => {
     if (elementId === "equal") {
       equal();
     }
+    if (elementId === "erase") {
+      eraser();
+    }
+    if (elementId === "c") {
+      reset();
+    }
+    if (elementId === "invert") {
+      invert();
+    }
   });
 });
 
@@ -48,10 +59,13 @@ const addNumber = (num) => {
     console.log("coma");
     return;
   }
+  if (entryNumber.length === 0 && num === ".") {
+    entryNumber[0] = "0";
+  }
   if (lastOperation === "equal") {
     resetEntryNumber();
     resetStoreNumber();
-    showOperation.innerText = storeNumber;
+    showOperationFunction(storeNumber);
   }
   entryNumber.push(num);
   console.log(entryNumber);
@@ -64,7 +78,7 @@ const addNumber = (num) => {
 const operate = (sign) => {
   if (lastOperation === "operation") {
     storeNumber.splice(1, 1, sign);
-    showOperation.innerText = storeNumber.join(" ");
+    showOperationFunction(storeNumber.join(" "));
     return;
   } else if (storeNumber[1]) {
     equal();
@@ -76,7 +90,7 @@ const operate = (sign) => {
   }
   storeNumber.push(sign);
   resetEntryNumber();
-  showOperation.innerText = storeNumber.join(" ");
+  showOperationFunction(storeNumber.join(" "));
   showTotalFunction(entryNumber);
 
   lastOperation = "operation";
@@ -103,11 +117,37 @@ const equal = () => {
 
     entryNumber = [total()];
   }
-  showOperation.innerText = storeNumber.join(" ");
+  showOperationFunction(storeNumber.join(" "));
   showTotalFunction(entryNumber);
 
   lastOperation = "equal";
 };
+
+// erase function
+
+const eraser = () => {
+  entryNumber.splice(entryNumber.length - 1, 1);
+  showTotalFunction(entryNumber.join(""));
+};
+
+// reset function
+
+const reset = () => {
+  console.log("reset");
+  resetEntryNumber();
+  showTotalFunction(entryNumber);
+
+  if (lastOperation === "reset" || lastOperation === "equal") {
+    resetStoreNumber();
+    showOperationFunction(storeNumber);
+  }
+
+  lastOperation = "reset";
+};
+
+// reset function
+
+const invert = () => {};
 
 // displayed variable will be the temporal variable
 
