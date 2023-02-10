@@ -1,6 +1,7 @@
 @import url(normalize.css);
 * {
   box-sizing: border-box;
+  font-family: "Khula", sans-serif;
 }
 
 body {
@@ -17,13 +18,16 @@ body {
   display: flex;
   flex-direction: column;
   background-color: rgb(218, 218, 218);
+  box-shadow: rgba(160, 81, 11, 0.624) 0px 20px 29px 0px;
 }
 .calculator .top {
-  background-color: gray;
+  text-align: right;
+  font-size: 2em;
+  background-color: rgb(247, 247, 247);
   width: 100%;
   height: 220px;
   border-radius: 25px 25px 0 0;
-  padding: 30px 50px;
+  padding: 50px 50px;
 }
 .calculator .bottom {
   width: 100%;
@@ -35,7 +39,8 @@ body {
   gap: 2px;
 }
 .calculator .bottom .buttons {
-  background-color: aliceblue;
+  font-size: 1.5em;
+  background: linear-gradient(120deg, rgb(233, 230, 230), rgb(255, 255, 255));
   width: 100%;
   height: 100%;
   text-align: center;
@@ -44,5 +49,14 @@ body {
   align-items: center;
 }
 .calculator .bottom .red {
-  background-color: rgb(196, 76, 76);
+  background: linear-gradient(120deg, rgb(226, 102, 102), rgb(178, 70, 70));
+}
+.calculator .bottom .orange {
+  background: linear-gradient(120deg, rgb(205, 149, 109), rgb(230, 179, 142));
+}
+.calculator .bottom .borderleft {
+  border-radius: 0 0 0 25%;
+}
+.calculator .bottom .borderright {
+  border-radius: 0 0 25% 0;
 }/*# sourceMappingURL=style.css.map */

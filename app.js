@@ -76,12 +76,11 @@ const addNumber = (num) => {
 // function for adding
 
 const operate = (sign) => {
+  validateNumber(entryNumber);
   if (lastOperation === "operation") {
     storeNumber.splice(1, 1, sign);
     showOperationFunction(storeNumber.join(" "));
     return;
-  } else if (storeNumber[1]) {
-    equal();
   }
   if (typeof entryNumber === "object") {
     storeNumber = [entryNumber.join("")];
@@ -115,7 +114,7 @@ const equal = () => {
 
     total = Function("return " + storeNumber.join(" "));
 
-    entryNumber = [total()];
+    entryNumber = [total().toString()];
   }
   showOperationFunction(storeNumber.join(" "));
   showTotalFunction(entryNumber);
@@ -147,7 +146,29 @@ const reset = () => {
 
 // reset function
 
-const invert = () => {};
+const invert = () => {
+  entryNumber = entryNumber.join("").split("");
+  if (entryNumber[0] === "-") {
+    entryNumber.splice(0, 1);
+  } else {
+    entryNumber.splice(0, 0, "-");
+  }
+  entryNumber = [entryNumber.join("")];
+  lastOperation = "invert";
+  showTotalFunction(entryNumber);
+  console.log(entryNumber);
+};
+
+// validate number
+
+validateNumber = (array) => {
+  while (
+    array.includes(".") &&
+    (array[array.length - 1] === "0" || array[array.length - 1] === ".")
+  ) {
+    array.splice(array.length - 1, 1);
+  }
+};
 
 // displayed variable will be the temporal variable
 
