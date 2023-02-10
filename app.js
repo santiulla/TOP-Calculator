@@ -2,7 +2,7 @@
 
 const numbers = /[0-9.]/;
 
-const operations = /[+-/*]/;
+const operations = /[\+\-\/\*]/;
 
 // constants
 
@@ -36,6 +36,7 @@ buttons.forEach((button) => {
 
 const addNumber = (num) => {
   if (entryNumber.includes(".") && num === ".") {
+    console.log("coma");
     return;
   }
   entryNumber.push(num);
@@ -46,6 +47,7 @@ const addNumber = (num) => {
 // function for adding
 
 const operate = (sign) => {
+  console.log("operator");
   storeNumber = [entryNumber.join("")];
   storeNumber.push(sign);
   entryNumber = [];
