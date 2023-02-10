@@ -10,7 +10,16 @@ let entryNumber = [];
 
 let storeNumber = [];
 
+let lastOperation = "";
+
 let total;
+
+const resetEntryNumber = () => (entryNumber = []);
+const resetStoreNumber = () => (storeNumber = []);
+
+const showTotalFunction = (show) => {
+  showTotal.innerText = show;
+};
 
 // create buttos event listeners
 
@@ -39,20 +48,38 @@ const addNumber = (num) => {
     console.log("coma");
     return;
   }
+  if (lastOperation === "equal") {
+    resetEntryNumber();
+    resetStoreNumber();
+    showOperation.innerText = storeNumber;
+  }
   entryNumber.push(num);
   console.log(entryNumber);
   showTotal.innerText = entryNumber.join("");
+  lastOperation = "addNumber";
 };
 
 // function for adding
 
 const operate = (sign) => {
-  console.log("operator");
-  storeNumber = [entryNumber.join("")];
+  if (lastOperation === "operation") {
+    storeNumber.splice(1, 1, sign);
+    showOperation.innerText = storeNumber.join(" ");
+    return;
+  } else if (storeNumber[1]) {
+    equal();
+  }
+  if (typeof entryNumber === "object") {
+    storeNumber = [entryNumber.join("")];
+  } else {
+    storeNumber = [entryNumber];
+  }
   storeNumber.push(sign);
-  entryNumber = [];
+  resetEntryNumber();
   showOperation.innerText = storeNumber.join(" ");
-  showTotal.innerText = entryNumber;
+  showTotalFunction(entryNumber);
+
+  lastOperation = "operation";
 
   console.log(storeNumber);
 };
@@ -60,15 +87,26 @@ const operate = (sign) => {
 // function for result
 
 const equal = () => {
-  storeNumber.push(entryNumber.join(""));
+  if (lastOperation === "operation") {
+    entryNumber = storeNumber[0];
+    resetStoreNumber();
+  } else {
+    if (lastOperation === "equal") {
+      storeNumber[0] = entryNumber[0];
+    } else {
+      storeNumber.push(entryNumber.join(""));
+    }
 
-  console.log(storeNumber);
+    console.log(storeNumber);
 
-  total = Function("return " + storeNumber.join(" "));
+    total = Function("return " + storeNumber.join(" "));
 
+    entryNumber = [total()];
+  }
   showOperation.innerText = storeNumber.join(" ");
-  entryNumber = total();
-  showTotal.innerText = entryNumber;
+  showTotalFunction(entryNumber);
+
+  lastOperation = "equal";
 };
 
 // displayed variable will be the temporal variable
