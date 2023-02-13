@@ -72,7 +72,6 @@ let keys = window.addEventListener("keydown", (event) => {
   if (key === "Escape" || key === "Delete") {
     return reset();
   }
-  console.log(key);
 });
 
 // numbers will be added to a entry variable
@@ -82,16 +81,26 @@ const addNumber = (num) => {
     console.log("coma");
     return;
   }
-  if (entryNumber.length === 0 && num === ".") {
-    entryNumber[0] = "0";
+
+  if (entryNumber[0] === "0" && entryNumber.length === 1 && num === "0") {
+    console.log("too many zeros");
+    return;
   }
-  if (lastOperation === "equal") {
-    resetEntryNumber();
-    resetStoreNumber();
-    showOperationFunction(storeNumber);
+  if (entryNumber[0] === "0" && entryNumber.length === 1 && num !== ".") {
+    entryNumber[0] = num;
+  } else {
+    if (lastOperation === "equal") {
+      resetEntryNumber();
+      resetStoreNumber();
+      showOperationFunction(storeNumber);
+    }
+    if (entryNumber.length === 0 && num === ".") {
+      entryNumber[0] = "0";
+    }
+    entryNumber.push(num);
+    console.log(entryNumber);
   }
-  entryNumber.push(num);
-  console.log(entryNumber);
+
   showTotal.innerText = entryNumber.join("");
   lastOperation = "addNumber";
 };
@@ -105,11 +114,10 @@ const operate = (sign) => {
     showOperationFunction(storeNumber.join(" "));
     return;
   }
-  if (typeof entryNumber === "object") {
-    storeNumber = [entryNumber.join("")];
-  } else {
-    storeNumber = [entryNumber];
+  if (storeNumber.length === 2) {
+    equal();
   }
+  storeNumber = [entryNumber.join("")];
   storeNumber.push(sign);
   resetEntryNumber();
   showOperationFunction(storeNumber.join(" "));
@@ -123,6 +131,13 @@ const operate = (sign) => {
 // function for result
 
 const equal = () => {
+  if (!entryNumber[0]) {
+    console.log("nothing to sum up");
+    return;
+  }
+
+  validateNumber(entryNumber);
+
   if (lastOperation === "operation") {
     entryNumber = storeNumber[0];
     resetStoreNumber();
@@ -167,7 +182,7 @@ const reset = () => {
   lastOperation = "reset";
 };
 
-// reset function
+// invert function
 
 const invert = () => {
   entryNumber = entryNumber.join("").split("");

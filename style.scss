@@ -29,6 +29,14 @@ body {
     height: 220px;
     border-radius: 25px 25px 0 0;
     padding: 50px 50px;
+    position: relative;
+  }
+
+  .screen-bottom {
+    font-size: 1.7em;
+    position: absolute;
+    bottom: 15%;
+    right: 10%;
   }
 
   .bottom {
