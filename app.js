@@ -82,6 +82,10 @@ const addNumber = (num) => {
     return;
   }
 
+  if (entryNumber.length > 12) {
+    return;
+  }
+
   if (entryNumber[0] === "0" && entryNumber.length === 1 && num === "0") {
     console.log("too many zeros");
     return;
@@ -152,7 +156,9 @@ const equal = () => {
 
     total = Function("return " + storeNumber.join(" "));
 
-    entryNumber = [total().toString()];
+    entryNumber = [
+      (Math.round(total() * 10000000000) / 10000000000).toString(),
+    ];
   }
   showOperationFunction(storeNumber.join(" "));
   showTotalFunction(entryNumber);
